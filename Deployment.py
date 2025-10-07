@@ -6,6 +6,21 @@ from sentence_transformers import SentenceTransformer, util
 from streamlit.components.v1 import html
 import matplotlib.pyplot as plt
 import random
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Install required packages
+install("networkx")
+install("pyvis")
+install("sentence-transformers")
+install("torch")
+install("transformers")
+install("pandas")
+install("matplotlib")
+install("streamlit")
 
 # -------------------- Load Triples --------------------
 @st.cache_data
@@ -161,3 +176,4 @@ if st.button("Search QA"):
                 with open(graph_file, "r", encoding="utf-8") as f:
 
                     st.components.v1.html(f.read(), height=600)
+
