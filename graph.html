@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 500px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#A0DAA0", "font": {"color": "white"}, "id": "Viola Davis", "label": "Viola Davis", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Heart Attack", "label": "Heart Attack", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Reality Star", "label": "Reality Star", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "James Corden", "label": "James Corden", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Joe Biden", "label": "Joe Biden", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "National Unity", "label": "National Unity", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Mount 2024 Doubts Ease", "label": "Mount 2024 Doubts Ease", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Support", "label": "Support", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Michigan Supreme Court", "label": "Michigan Supreme Court", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Abortion Rights Amendment", "label": "Abortion Rights Amendment", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Yung Gravy", "label": "Yung Gravy", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Addison Raes Mom", "label": "Addison Raes Mom", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Don Jr", "label": "Don Jr", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Dick Pic", "label": "Dick Pic", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Markwayne Mullin", "label": "Markwayne Mullin", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Oklahoma Republican Primary", "label": "Oklahoma Republican Primary", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Uk Broadcaster", "label": "Uk Broadcaster", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Satirical Musical", "label": "Satirical Musical", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Mitch Mcconnell", "label": "Mitch Mcconnell", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Downbeat Forecast", "label": "Downbeat Forecast", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Salma Alshehab", "label": "Salma Alshehab", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Lengthy Prison Sentence", "label": "Lengthy Prison Sentence", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Mira Sorvino", "label": "Mira Sorvino", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Sweet Tribute", "label": "Sweet Tribute", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Extrump Adviser Peter Navarro", "label": "Extrump Adviser Peter Navarro", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Mike Pence", "label": "Mike Pence", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Prince George", "label": "Prince George", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Wide Variety", "label": "Wide Variety", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Kendrick Lamar", "label": "Kendrick Lamar", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Glastonbury Festival", "label": "Glastonbury Festival", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Joe Armstrong", "label": "Joe Armstrong", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "British Crowd", "label": "British Crowd", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Steve Bannon", "label": "Steve Bannon", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Trumpbacking Army", "label": "Trumpbacking Army", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Jonathan Groff", "label": "Jonathan Groff", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Epic Spring Awakening Reunion", "label": "Epic Spring Awakening Reunion", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Jared Kushner", "label": "Jared Kushner", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "White House Counsels Threats", "label": "White House Counsels Threats", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Pete Buttigieg", "label": "Pete Buttigieg", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Door Solution", "label": "Door Solution", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Dave Chappelle", "label": "Dave Chappelle", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Very Fitting Goodbye", "label": "Very Fitting Goodbye", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Kim Kardashian", "label": "Kim Kardashian", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Pete Davidsons", "label": "Pete Davidsons", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Adam Kinzinger", "label": "Adam Kinzinger", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Gun Age", "label": "Gun Age", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Brian Kemp", "label": "Brian Kemp", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Gop Nomination", "label": "Gop Nomination", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Don Gorske", "label": "Don Gorske", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Big Mac", "label": "Big Mac", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "John Legend", "label": "John Legend", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Brave Chrissy Teigen", "label": "Brave Chrissy Teigen", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Gop Rep Madison Cawthorn", "label": "Gop Rep Madison Cawthorn", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Brutal Reminder", "label": "Brutal Reminder", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Charles Herbster", "label": "Charles Herbster", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Nebraska Gubernatorial Race", "label": "Nebraska Gubernatorial Race", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Exfbi Assistant Director", "label": "Exfbi Assistant Director", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Tucker Carlson", "label": "Tucker Carlson", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Jon Stewart", "label": "Jon Stewart", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Mark Twain Prize", "label": "Mark Twain Prize", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Biden Administration", "label": "Biden Administration", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Global Trade Chief", "label": "Global Trade Chief", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Donald Trump", "label": "Donald Trump", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "2024 Election", "label": "2024 Election", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Volodymyr Zelenskyy Hails Ukrainians", "label": "Volodymyr Zelenskyy Hails Ukrainians", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "50 Days", "label": "50 Days", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Idris Elba", "label": "Idris Elba", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Dr Dre Song", "label": "Dr Dre Song", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Jimmy Kimmel", "label": "Jimmy Kimmel", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Ted Cruz", "label": "Ted Cruz", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Serena Williams", "label": "Serena Williams", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Powerful Essay", "label": "Powerful Essay", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Sean Penn", "label": "Sean Penn", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Sean Hannity", "label": "Sean Hannity", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Stephen Colbert", "label": "Stephen Colbert", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Xrated New Description", "label": "Xrated New Description", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Latenight Host", "label": "Latenight Host", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Chris Rock", "label": "Chris Rock", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Israel", "label": "Israel", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Airstrikes", "label": "Airstrikes", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Netanyahu", "label": "Netanyahu", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Solid Lead", "label": "Solid Lead", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Uk", "label": "Uk", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Eu", "label": "Eu", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Moscow", "label": "Moscow", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "War", "label": "War", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Bill Richardson", "label": "Bill Richardson", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Us Forces", "label": "Us Forces", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Taiwan", "label": "Taiwan", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Democrats", "label": "Democrats", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Seth Magaziner", "label": "Seth Magaziner", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Harry Styles", "label": "Harry Styles", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Tribute", "label": "Tribute", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Republicans", "label": "Republicans", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Trumps Hoarding", "label": "Trumps Hoarding", "shape": "dot", "size": 25}, {"color": "#97C2FC", "font": {"color": "white"}, "id": "Hbo", "label": "Hbo", "shape": "dot", "size": 25}, {"color": "#A0DAA0", "font": {"color": "white"}, "id": "Sixpart Follow", "label": "Sixpart Follow", "shape": "dot", "size": 25}]);
+                  edges = new vis.DataSet([{"Frequency": 1, "Quality Score": 4.0, "Relation": "fear", "arrows": "to", "from": "Viola Davis", "to": "Heart Attack", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "tell", "arrows": "to", "from": "Reality Star", "to": "James Corden", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "urge", "arrows": "to", "from": "Joe Biden", "to": "National Unity", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "win", "arrows": "to", "from": "Joe Biden", "to": "Mount 2024 Doubts Ease", "width": 1}, {"Frequency": 2, "Quality Score": 3.0, "Relation": "express", "arrows": "to", "from": "Joe Biden", "to": "Support", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "revive", "arrows": "to", "from": "Michigan Supreme Court", "to": "Abortion Rights Amendment", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "bring", "arrows": "to", "from": "Yung Gravy", "to": "Addison Raes Mom", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "post", "arrows": "to", "from": "Don Jr", "to": "Dick Pic", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "win", "arrows": "to", "from": "Markwayne Mullin", "to": "Oklahoma Republican Primary", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "air", "arrows": "to", "from": "Uk Broadcaster", "to": "Satirical Musical", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "give", "arrows": "to", "from": "Mitch Mcconnell", "to": "Downbeat Forecast", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "receive", "arrows": "to", "from": "Salma Alshehab", "to": "Lengthy Prison Sentence", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "offer", "arrows": "to", "from": "Mira Sorvino", "to": "Sweet Tribute", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "accuse", "arrows": "to", "from": "Extrump Adviser Peter Navarro", "to": "Mike Pence", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "show", "arrows": "to", "from": "Prince George", "to": "Wide Variety", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "close", "arrows": "to", "from": "Kendrick Lamar", "to": "Glastonbury Festival", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "tell", "arrows": "to", "from": "Joe Armstrong", "to": "British Crowd", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "hail", "arrows": "to", "from": "Steve Bannon", "to": "Trumpbacking Army", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "lead", "arrows": "to", "from": "Jonathan Groff", "to": "Epic Spring Awakening Reunion", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "dismiss", "arrows": "to", "from": "Jared Kushner", "to": "White House Counsels Threats", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "call", "arrows": "to", "from": "Pete Buttigieg", "to": "Door Solution", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "reveal", "arrows": "to", "from": "Dave Chappelle", "to": "Very Fitting Goodbye", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "discuss", "arrows": "to", "from": "Kim Kardashian", "to": "Pete Davidsons", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "call", "arrows": "to", "from": "Adam Kinzinger", "to": "Gun Age", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "win", "arrows": "to", "from": "Brian Kemp", "to": "Gop Nomination", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "eat", "arrows": "to", "from": "Don Gorske", "to": "Big Mac", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "praise", "arrows": "to", "from": "John Legend", "to": "Brave Chrissy Teigen", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "receive", "arrows": "to", "from": "Gop Rep Madison Cawthorn", "to": "Brutal Reminder", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "lose", "arrows": "to", "from": "Charles Herbster", "to": "Nebraska Gubernatorial Race", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "accuse", "arrows": "to", "from": "Exfbi Assistant Director", "to": "Tucker Carlson", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "receive", "arrows": "to", "from": "Jon Stewart", "to": "Mark Twain Prize", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "urge", "arrows": "to", "from": "Biden Administration", "to": "Global Trade Chief", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "steal", "arrows": "to", "from": "Donald Trump", "to": "2024 Election", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "resolve", "arrows": "to", "from": "Volodymyr Zelenskyy Hails Ukrainians", "to": "50 Days", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "reveal", "arrows": "to", "from": "Idris Elba", "to": "Dr Dre Song", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "trolls", "arrows": "to", "from": "Jimmy Kimmel", "to": "Ted Cruz", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "write", "arrows": "to", "from": "Serena Williams", "to": "Powerful Essay", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "tell", "arrows": "to", "from": "Sean Penn", "to": "Sean Hannity", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "give", "arrows": "to", "from": "Stephen Colbert", "to": "Xrated New Description", "width": 1}, {"Frequency": 1, "Quality Score": 4.0, "Relation": "praise", "arrows": "to", "from": "Latenight Host", "to": "Chris Rock", "width": 1}, {"Frequency": 3, "Quality Score": 3.0, "Relation": "launch", "arrows": "to", "from": "Israel", "to": "Airstrikes", "width": 1}, {"Frequency": 2, "Quality Score": 3.0, "Relation": "hold", "arrows": "to", "from": "Netanyahu", "to": "Solid Lead", "width": 1}, {"Frequency": 2, "Quality Score": 3.0, "Relation": "leave", "arrows": "to", "from": "Uk", "to": "Eu", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "escalate", "arrows": "to", "from": "Moscow", "to": "War", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "visit", "arrows": "to", "from": "Moscow", "to": "Bill Richardson", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "defend", "arrows": "to", "from": "Us Forces", "to": "Taiwan", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "nominate", "arrows": "to", "from": "Democrats", "to": "Seth Magaziner", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "pay", "arrows": "to", "from": "Harry Styles", "to": "Tribute", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "ignore", "arrows": "to", "from": "Republicans", "to": "Trumps Hoarding", "width": 1}, {"Frequency": 1, "Quality Score": 3.0, "Relation": "release", "arrows": "to", "from": "Hbo", "to": "Sixpart Follow", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 12}}, "edges": {"font": {"size": 10, "align": "middle"}, "arrows": "to"}, "physics": {"enabled": true}, "interaction": {"hover": true, "zoomView": true}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
