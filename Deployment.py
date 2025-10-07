@@ -9,7 +9,7 @@ import random
 
 # -------------------- Load Triples --------------------
 @st.cache_data
-def load_triples(path="C:\\vigne\\infosys internship 6.0\\milestone_4\\meaningful_triples_cleaned.csv"):
+def load_triples(path="meaningful_triples_cleaned.csv"):
     return pd.read_csv(path)
 
 # -------------------- Build Graph --------------------
@@ -159,4 +159,5 @@ if st.button("Search QA"):
             graph_file = visualize_node_graph(G, entity1)
             if graph_file:
                 with open(graph_file, "r", encoding="utf-8") as f:
+
                     st.components.v1.html(f.read(), height=600)
